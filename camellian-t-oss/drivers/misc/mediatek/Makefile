@@ -191,3 +191,4 @@ obj-$(CONFIG_MTK_SDA) += sda/
 obj-$(CONFIG_MTK_MT6382_BDG) += hifi4dsp_spi/
 # BSP.System - 2020.11.2 - add simtray status
 obj-y += simtray/
+obj-$(CONFIG_MTK_ULTRASND_PROXIMITY) += elliptic/
