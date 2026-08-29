@@ -1,5 +1,8 @@
 FROM ubuntu:24.04 AS extractor
 
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=UTC
+
 ARG MAGISK_APK_URL="https://github.com/topjohnwu/Magisk/releases/download/v30.7/Magisk-v30.7.apk"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
