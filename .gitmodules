@@ -1,0 +1,8 @@
+[submodule "kernel_lineage_mt6833"]
+	path = kernel_lineage_mt6833
+	url = https://github.com/xiaomi-mt6833-dev/kernel_xiaomi_mt6833.git
+	branch = lineage-23.2
+[submodule "magisk"]
+	path = magisk
+	url = https://github.com/topjohnwu/Magisk.git
+	branch = v30.7
