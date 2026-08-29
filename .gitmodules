@@ -6,3 +6,6 @@
 	path = magisk
 	url = https://github.com/topjohnwu/Magisk.git
 	branch = v30.7
+[submodule "pwnage24mtk"]
+	path = pwnage24mtk
+	url = https://github.com/kasnria001/pwnage24mtk
