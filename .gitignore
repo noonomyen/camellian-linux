@@ -1,0 +1,12 @@
+out/
+tmp/
+.ccache/
+.llvm_cache/
+rom/
+toolchain/
+*.img
+*.bin
+*.zip
+*.tar*
+*.swp
+*~
