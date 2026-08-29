@@ -5,6 +5,7 @@ tmp/
 rom/
 toolchain/
 *.img
+!boot/boot.stock.img
 *.bin
 *.zip
 *.tar*
