@@ -9,10 +9,10 @@ if [ "${IS_CONTAINER}" != "1" ]; then
 fi
 
 MODE="clean"
-INPUT_BOOT="/workspace/boot/boot.stock.img"
+INPUT_BOOT="/workspace/images/boot.stock.img"
 KERNEL_IMAGE="/workspace/out/arch/arm64/boot/Image.gz"
-CONFIG_FILE="/workspace/boot/magisk-flags.txt"
-[ ! -f "$CONFIG_FILE" ] && CONFIG_FILE="/workspace/boot/stock-magisk/flags.txt"
+CONFIG_FILE="/workspace/images/magisk-flags.txt"
+[ ! -f "$CONFIG_FILE" ] && CONFIG_FILE="/workspace/images/stock-magisk/flags.txt"
 
 while [ $# -gt 0 ]; do
     case "$1" in
