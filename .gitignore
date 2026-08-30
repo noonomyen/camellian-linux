@@ -5,7 +5,8 @@ tmp/
 rom/
 toolchain/
 *.img
-!boot/boot.stock.img
+!images/tee.stock.img
+!images/boot.stock.img
 *.bin
 *.zip
 *.tar*
