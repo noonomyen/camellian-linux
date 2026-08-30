@@ -1,19 +1,19 @@
 # Build Instructions
 
-## 1. Build Docker Images
+## Build Docker Images
 
 ```bash
 docker build -t android-11-builder -f Dockerfile.builder .
 docker build -t magisk-builder -f Dockerfile.magisk .
 ```
 
-## 2. Compile Kernel
+## Compile Kernel
 
 ```bash
 ./scripts/build_kernel.sh camellian_gl_base_defconfig
 ```
 
-## 3. Repack Boot Image
+## Repack Boot Image
 
 ```bash
 # Repack clean boot image

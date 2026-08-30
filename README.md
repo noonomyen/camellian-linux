@@ -1,18 +1,22 @@
 # camellian-linux
 
-Kernel source and tools for **camellian**, which is the codename for **POCO M3 Pro 5G / Redmi Note 10 5G / Redmi Note 10T** as specified in `MiCode/Xiaomi_Kernel_OpenSource`.
+Kernel source and tools for **camellian**, which is the codename for
+**POCO M3 Pro 5G / Redmi Note 10 5G / Redmi Note 10T** as specified in
+`MiCode/Xiaomi_Kernel_OpenSource`.
 
-The target device used for testing is **POCO M3 Pro 5G (`M2103K19PG`)** with an unlocked bootloader.
-
----
+The target device used for testing is **POCO M3 Pro 5G (`M2103K19PG`)** with an
+unlocked bootloader.
 
 ## Kernel Source Integration
 
-The kernel source was assembled by taking the `camellian-t-oss` branch from `MiCode/Xiaomi_Kernel_OpenSource` and merging the missing drivers from `xiaomi-mt6833-dev/kernel_xiaomi_mt6833`.
+The kernel source was assembled by taking the `camellian-t-oss` branch from
+`MiCode/Xiaomi_Kernel_OpenSource` and merging the missing drivers from
+`xiaomi-mt6833-dev/kernel_xiaomi_mt6833`.
 
-The codebase and `camellian_gl_base_defconfig` were modified and patched until successfully booting on stock ROM **`camellian_global_images_V14.0.6.0.TKSMIXM_13.0`**. Note that the defconfig may not be entirely complete or perfect yet.
-
----
+The codebase and `camellian_gl_base_defconfig` were modified and patched until
+successfully booting on stock ROM
+**`camellian_global_images_V14.0.6.0.TKSMIXM_13.0`**. Note that the defconfig
+may not be entirely complete or perfect yet.
 
 ## Sources & Attributions
 
@@ -24,8 +28,12 @@ The codebase and `camellian_gl_base_defconfig` were modified and patched until s
 | [bkerler/mtkclient](https://github.com/bkerler/mtkclient) | MediaTek flashing tool utilizing Kamakiri exploit |
 | [kasnria001/pwnage24mtk](https://github.com/kasnria001/pwnage24mtk) | MediaTek certificate exploit tool |
 
----
+## Flashing & Tools
+
+For instructions on `mtkclient` UFS LUN mapping, preloader flashing, and
+partition backup guidelines, please see [MTKCLIENT.md](MTKCLIENT.md).
 
 ## Building
 
-For build prerequisites and step-by-step compilation instructions, please see [BUILD.md](BUILD.md).
+For build prerequisites and step-by-step compilation instructions, please see
+[BUILD.md](BUILD.md).
