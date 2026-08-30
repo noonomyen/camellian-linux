@@ -1,7 +1,7 @@
 # camellian-linux
 
-Kernel source and tools for **camellian**, which is the codename for
-**POCO M3 Pro 5G / Redmi Note 10 5G / Redmi Note 10T** as specified in
+Kernel source and tools for **camellian**, which is the codename for **POCO M3
+Pro 5G / Redmi Note 10 5G / Redmi Note 10T** as specified in
 `MiCode/Xiaomi_Kernel_OpenSource`.
 
 The target device used for testing is **POCO M3 Pro 5G (`M2103K19PG`)** with an
@@ -20,20 +20,31 @@ may not be entirely complete or perfect yet.
 
 ## Sources & Attributions
 
-| Source | Description |
-| :--- | :--- |
-| [MiCode/Xiaomi_Kernel_OpenSource](https://github.com/MiCode/Xiaomi_Kernel_OpenSource/tree/camellian-t-oss) | Initial base kernel source |
-| [xiaomi-mt6833-dev/kernel_xiaomi_mt6833](https://github.com/xiaomi-mt6833-dev/kernel_xiaomi_mt6833/tree/lineage-23.2) | Missing driver source |
-| [topjohnwu/Magisk](https://github.com/topjohnwu/Magisk/tree/v30.7) | Root access and boot image utilities |
-| [bkerler/mtkclient](https://github.com/bkerler/mtkclient) | MediaTek flashing tool utilizing Kamakiri exploit |
-| [kasnria001/pwnage24mtk](https://github.com/kasnria001/pwnage24mtk) | MediaTek certificate exploit tool |
+- [MiCode/Xiaomi_Kernel_OpenSource][1]: Initial base kernel source
+- [xiaomi-mt6833-dev/kernel_xiaomi_mt6833][2]: Missing driver source
+- [topjohnwu/Magisk][3]: Root access and boot image utilities
+- [bkerler/mtkclient][4]: MediaTek flashing tool (Kamakiri exploit)
+- [kasnria001/pwnage24mtk][5]: MediaTek certificate exploit tool
+
+[1]: https://github.com/MiCode/Xiaomi_Kernel_OpenSource/tree/camellian-t-oss
+[2]: https://github.com/xiaomi-mt6833-dev/kernel_xiaomi_mt6833/tree/lineage-23.2
+[3]: https://github.com/topjohnwu/Magisk/tree/v30.7
+[4]: https://github.com/bkerler/mtkclient
+[5]: https://github.com/kasnria001/pwnage24mtk
 
 ## Flashing & Tools
 
 For instructions on `mtkclient` UFS LUN mapping, preloader flashing, and
-partition backup guidelines, please see [MTKCLIENT.md](MTKCLIENT.md).
+partition backup guidelines, please see [MTKCLIENT.md](docs/MTKCLIENT.md).
 
 ## Building
 
 For build prerequisites and step-by-step compilation instructions, please see
-[BUILD.md](BUILD.md).
+[BUILD.md](docs/BUILD.md).
+
+## KVM & EL2 Booting (Hypervisor Support)
+
+For detailed documentation on how we reverse-engineered the MTK bootchain,
+patched the ATF (`tee.img`) to bypass GenieZone (GZ), and resolved Clang CFI
+kernel panics to successfully boot Linux in EL2 mode with KVM enabled, please
+see [KERNEL_EL2.md](docs/KERNEL_EL2.md).
