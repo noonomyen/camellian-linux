@@ -11,3 +11,5 @@ toolchain/
 *.tar*
 *.swp
 *~
+.pyvenv/
+backup/

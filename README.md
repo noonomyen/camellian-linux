@@ -21,7 +21,7 @@ The codebase and `camellian_gl_base_defconfig` were modified and patched until s
 | [MiCode/Xiaomi_Kernel_OpenSource](https://github.com/MiCode/Xiaomi_Kernel_OpenSource/tree/camellian-t-oss) | Initial base kernel source |
 | [xiaomi-mt6833-dev/kernel_xiaomi_mt6833](https://github.com/xiaomi-mt6833-dev/kernel_xiaomi_mt6833/tree/lineage-23.2) | Missing driver source |
 | [topjohnwu/Magisk](https://github.com/topjohnwu/Magisk/tree/v30.7) | Root access and boot image utilities |
-| [bkerler/mtkclient](https://github.com/bkerler/mtkclient) | MediaTek flashing tool based on Kamakiri exploit |
+| [bkerler/mtkclient](https://github.com/bkerler/mtkclient) | MediaTek flashing tool utilizing Kamakiri exploit |
 | [kasnria001/pwnage24mtk](https://github.com/kasnria001/pwnage24mtk) | MediaTek certificate exploit tool |
 
 ---
