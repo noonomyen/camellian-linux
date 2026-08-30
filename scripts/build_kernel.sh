@@ -10,8 +10,11 @@ if ! docker image inspect "$IMAGE_NAME" >/dev/null 2>&1; then
 fi
 
 docker run --rm \
+    --hostname "${BUILD_HOST:-camellian-builder}" \
     -u "$(id -u):$(id -g)" \
     -e KERNEL_SRC="${KERNEL_SRC:-camellian-t-oss}" \
+    -e KBUILD_BUILD_USER="${KBUILD_BUILD_USER:-builder}" \
+    -e KBUILD_BUILD_HOST="${KBUILD_BUILD_HOST:-camellian-builder}" \
     -e USE_CCACHE="${USE_CCACHE:-1}" \
     -e USE_LLVM_CACHE="${USE_LLVM_CACHE:-1}" \
     -v "$REPO_DIR:/workspace" \

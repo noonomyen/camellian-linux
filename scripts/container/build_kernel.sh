@@ -31,6 +31,8 @@ fi
 export PATH="$CLANG_BIN:$GCC64_BIN:$GCC32_BIN:$PATH"
 export ARCH=arm64
 export SUBARCH=arm64
+export KBUILD_BUILD_USER="${KBUILD_BUILD_USER:-builder}"
+export KBUILD_BUILD_HOST="${KBUILD_BUILD_HOST:-camellian-builder}"
 
 DEFCONFIG="${1:-camellian_gl_base_defconfig}"
 
