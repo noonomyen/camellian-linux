@@ -1,0 +1,76 @@
+diff --git a/mtkclient/Library/DA/storage.py b/mtkclient/Library/DA/storage.py
+index 0b7489b..822cd5b 100644
+--- a/mtkclient/Library/DA/storage.py
++++ b/mtkclient/Library/DA/storage.py
+@@ -288,56 +288,35 @@ class Storage(metaclass=LogBase):
+                     "Unknown parttype. Known parttypes are \"boot1\",\"boot2\",\"gp1\",\"gp2\",\"gp3\",\"gp4\",\"rpmb\"")
+                 return []
+         elif storage == DaStorage.MTK_DA_STORAGE_UFS:
+-            if parttype == "user" or parttype is None:
++            # Fix: Unify standard aliases (user, boot1, boot2, rpmb) and LUN names (lu0, lu1, lu2, lu3)
++            # Fix: Prevent parttype variable overwrite and fix XML LUA mapping to avoid corrupting LU0 GPT
++            if parttype in ["user", "lu0", None]:
+                 if not xml:
+                     parttype = UFSPartitionType.USER
+-                    self.flashsize = self.ufs.lu0_size
+                 else:
+-                    parttype = "UFS-LUA2"
+-                    self.flashsize = self.ufs.lu2_size
+-            elif parttype == "boot1":
++                    parttype = "UFS-LUA0"
++                self.flashsize = self.ufs.lu0_size
++            elif parttype in ["boot1", "lu1"]:
+                 if not xml:
+                     parttype = UFSPartitionType.BOOT1
+-                    self.flashsize = self.ufs.lu1_size
+                 else:
+-                    parttype = "UFS-LUA0"
+-                    self.flashsize = self.ufs.lu0_size
+-            elif parttype == "boot2":
++                    parttype = "UFS-LUA1"
++                self.flashsize = self.ufs.lu1_size
++            elif parttype in ["boot2", "lu2"]:
+                 if not xml:
+                     parttype = UFSPartitionType.BOOT2
+-                    self.flashsize = self.ufs.lu2_size
+                 else:
+-                    parttype = "UFS-LUA1"
+-                    self.flashsize = self.ufs.lu0_size
+-            elif parttype == "rpmb":
++                    parttype = "UFS-LUA2"
++                self.flashsize = self.ufs.lu2_size
++            elif parttype in ["rpmb", "lu3"]:
+                 if not xml:
+                     parttype = UFSPartitionType.RPMB
+-                    self.flashsize = self.ufs.lu3_size
+                 else:
+                     parttype = "UFS-LUA3"
+-                    self.flashsize = self.ufs.lu3_size
++                self.flashsize = self.ufs.lu3_size
+             else:
+-                if not xml:
+-                    parttype = UFSPartitionType.USER
+-                if parttype == "lu0":
+-                    if xml:
+-                        parttype = "UFS-LUA0"
+-                    self.flashsize = self.ufs.lu0_size
+-                elif parttype == "lu1":  # BOOT1
+-                    if xml:
+-                        parttype = "UFS-LUA1"
+-                    self.flashsize = self.ufs.lu1_size
+-                elif parttype == "lu2":  # BOOT2
+-                    if xml:
+-                        parttype = "UFS-LUA2"
+-                    self.flashsize = self.ufs.lu2_size
+-                elif parttype == "lu3":
+-                    if xml:
+-                        parttype = "UFS-LUA3"
+-                    self.flashsize = self.ufs.lu3_size
+-                else:
+-                    self.error("Unknown parttype. Known parttypes are \"lu1\",\"lu2\",\"lu3\",\"lu4\"")
+-                    return []
++                self.error("Unknown parttype. Known parttypes are \"lu0\",\"lu1\",\"lu2\",\"lu3\" or \"user\",\"boot1\",\"boot2\",\"rpmb\"")
++                return []
+         elif storage in [DaStorage.MTK_DA_STORAGE_NAND, DaStorage.MTK_DA_STORAGE_NAND_MLC,
+                          DaStorage.MTK_DA_STORAGE_NAND_SLC, DaStorage.MTK_DA_STORAGE_NAND_TLC,
+                          DaStorage.MTK_DA_STORAGE_NAND_SPI, DaStorage.MTK_DA_STORAGE_NAND_AMLC]:
