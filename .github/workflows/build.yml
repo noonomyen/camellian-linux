@@ -29,6 +29,10 @@ jobs:
         run: |
           docker build -t android-11-builder -f Dockerfile.builder .
 
+      - name: Build Docker Magisk image
+        run: |
+          docker build -t magisk-utils -f Dockerfile.magisk .
+
       - name: Compile kernel
         run: |
           ./scripts/build_kernel.sh camellian_gl_base_defconfig
