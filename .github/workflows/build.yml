@@ -1,0 +1,38 @@
+name: Build Kernel & Boot Images
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build & Pack
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Restore compiler cache
+        uses: actions/cache@v4
+        with:
+          path: .ccache
+          key: ${{ runner.os }}-ccache-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-ccache-
+
+      - name: Build Docker builder image
+        run: |
+          docker build -t android-11-builder -f Dockerfile.builder .
+
+      - name: Compile kernel
+        run: |
+          ./scripts/build_kernel.sh camellian_gl_base_defconfig
+
+      - name: Pack boot images (Clean & Magisk)
+        run: |
+          ./scripts/pack_boot.sh --both
