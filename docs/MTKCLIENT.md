@@ -25,7 +25,7 @@ From this layout:
 ## Applying the Fix Patch
 
 Apply the patch located at
-[`patches/0001-fix-ufs-lun-mapping.patch`](patches/0001-fix-ufs-lun-mapping.patch):
+[`patches/0001-fix-ufs-lun-mapping.patch`](../patches/0001-fix-ufs-lun-mapping.patch):
 
 ```bash
 cd mtkclient
