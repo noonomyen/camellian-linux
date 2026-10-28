@@ -2,12 +2,14 @@ name: Build Kernel & Boot Images
 
 on:
   push:
-    branches:
-      - master
   pull_request:
     branches:
       - master
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -20,10 +22,15 @@ jobs:
       - name: Restore compiler cache
         uses: actions/cache@v4
         with:
-          path: .ccache
-          key: ${{ runner.os }}-ccache-${{ github.sha }}
+          path: |
+            .ccache
+            .llvm_cache
+          key: ${{ runner.os }}-kernel-cache-${{ github.ref_name }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-ccache-
+            ${{ runner.os }}-kernel-cache-${{ github.ref_name }}-
+            ${{ runner.os }}-kernel-cache-${{ github.base_ref }}-
+            ${{ runner.os }}-kernel-cache-master-
+            ${{ runner.os }}-kernel-cache-
 
       - name: Build Docker builder image
         run: |
