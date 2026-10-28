@@ -1227,7 +1227,7 @@ return:
 static int32_t nvt_selftest_open(struct inode *inode, struct file *file)
 {
 	struct device_node *np = ts->client->dev.of_node;
-	unsigned char mpcriteria[4096] = {0};	//novatek-mp-criteria-default
+	char mpcriteria[64] = {0};	//novatek-mp-criteria-default
 
 	uint8_t buf[8] = {0};
 	TestResult_SPI_Comm = 0;
@@ -1283,7 +1283,7 @@ static int32_t nvt_selftest_open(struct inode *inode, struct file *file)
 		 * Ex. nvt_pid = 500A
 		 *     mpcriteria = "novatek-mp-criteria-500A"
 		 */
-		snprintf(mpcriteria, PAGE_SIZE, "novatek-mp-criteria-%04X", ts->nvt_pid);
+		snprintf(mpcriteria, sizeof(mpcriteria), "novatek-mp-criteria-%04X", ts->nvt_pid);
 
 		if (nvt_mp_parse_dt(np, mpcriteria)) {
 			//---Download Normal FW---
@@ -1773,7 +1773,7 @@ static ssize_t nvt_tp_selftest_store(struct file *file, const char __user *buff,
 	char *buff_tmp = kzalloc(count + 1, GFP_KERNEL);
 
 	struct device_node *np = ts->client->dev.of_node;
-	unsigned char mpcriteria[4096] = {0}; //novatek-mp-criteria-default
+	char mpcriteria[64] = {0}; //novatek-mp-criteria-default
 
 	TestResult_Short = 0;
 	TestResult_Open = 0;
@@ -1863,7 +1863,7 @@ static ssize_t nvt_tp_selftest_store(struct file *file, const char __user *buff,
 		* Ex. nvt_pid = 500A
 		*	   mpcriteria = "novatek-mp-criteria-500A"
 		*/
-		snprintf(mpcriteria, PAGE_SIZE, "novatek-mp-criteria-%04X", ts->nvt_pid);
+		snprintf(mpcriteria, sizeof(mpcriteria), "novatek-mp-criteria-%04X", ts->nvt_pid);
 
 		if (nvt_mp_parse_dt(np, mpcriteria)) {
 			//---Download Normal FW---
