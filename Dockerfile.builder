@@ -25,13 +25,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /opt/clang-r383902 && \
-    curl -sSL "https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/tags/android-11.0.0_r48/clang-r383902.tar.gz" | tar -xz -C /opt/clang-r383902
+    curl -f -sSL --retry 5 --retry-delay 3 --retry-all-errors \
+        "https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/tags/android-11.0.0_r48/clang-r383902.tar.gz" | tar -xz -C /opt/clang-r383902
 
-RUN mkdir -p /opt/aarch64-linux-android-4.9 && \
-    curl -sSL "https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/+archive/refs/tags/android-11.0.0_r48.tar.gz" | tar -xz -C /opt/aarch64-linux-android-4.9
+RUN git clone --depth=1 -b android-11.0.0_r48 \
+        https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 \
+        /opt/aarch64-linux-android-4.9 && \
+    rm -rf /opt/aarch64-linux-android-4.9/.git
 
-RUN mkdir -p /opt/arm-linux-androideabi-4.9 && \
-    curl -sSL "https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/+archive/refs/tags/android-11.0.0_r48.tar.gz" | tar -xz -C /opt/arm-linux-androideabi-4.9
+RUN git clone --depth=1 -b android-11.0.0_r48 \
+        https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9 \
+        /opt/arm-linux-androideabi-4.9 && \
+    rm -rf /opt/arm-linux-androideabi-4.9/.git
 
 RUN mkdir -p /opt/ccache-4.14 && \
     curl -sSL "https://github.com/ccache/ccache/releases/download/v4.14/ccache-4.14-linux-x86_64-glibc.tar.xz" | tar -xJ --strip-components=1 -C /opt/ccache-4.14 && \
