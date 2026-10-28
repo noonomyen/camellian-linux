@@ -1,0 +1,43 @@
+name: Test Building with dabao1955 Action
+
+on:
+  push:
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build Camellian Kernel
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+
+      - name: Apply Clang LTO Linker Patch
+        run: |
+          patch -p1 < patches/0002-force-link-ld-lld-lto.patch
+
+      # Verified working revision: https://github.com/dabao1955/kernel_build_action/commit/a979e12e4117a41a7f7075d9135699f0b58f8298
+      - name: Build Kernel
+        uses: dabao1955/kernel_build_action@main
+        with:
+          kernel-url: ./camellian-t-oss/
+          config: camellian_gl_base_defconfig
+          arch: arm64
+          aosp-clang: true
+          aosp-clang-version: r383902
+          aosp-gcc: true
+          android-version: 11
+          disable-lto: false
+          anykernel3: true
+          ccache: true

@@ -1,0 +1,18 @@
+diff --git a/camellian-t-oss/Makefile b/camellian-t-oss/Makefile
+index 05375708c..0aedefa47 100644
+--- a/camellian-t-oss/Makefile
++++ b/camellian-t-oss/Makefile
+@@ -667,6 +667,13 @@ export CFLAGS_GCOV
+ # Make toolchain changes before including arch/$(SRCARCH)/Makefile to ensure
+ # ar/cc/ld-* macros return correct values.
+ ifdef CONFIG_LTO_CLANG
++# Workaround: dabao1955/kernel_build_action strips LD arguments in filterMakeArgs
++# Target action revision: https://github.com/dabao1955/kernel_build_action/commit/a979e12e4117a41a7f7075d9135699f0b58f8298
++# Ensure ld.lld is used when building with Clang LTO instead of falling back to GNU gold.
++ifneq ($(findstring clang,$(CC)),)
++LD := ld.lld
++ld-name := lld
++endif
+ ifneq ($(ld-name),lld)
+ # use GNU gold with LLVMgold for LTO linking, and LD for vmlinux_link
+ LDFINAL_vmlinux := $(LD)
