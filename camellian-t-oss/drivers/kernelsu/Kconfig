@@ -1,0 +1,18 @@
+menu "KernelSU"
+
+config KSU
+	bool "KernelSU function support"
+	depends on OVERLAY_FS
+	default n
+	help
+	  Enable kernel-level root privileges on Android System.
+	  Built-in only: this tree ships no module build step.
+
+config KSU_DEBUG
+	bool "KernelSU debug mode"
+	depends on KSU
+	default n
+	help
+	  Enable KernelSU debug mode.
+
+endmenu

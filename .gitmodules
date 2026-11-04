@@ -12,3 +12,6 @@
 [submodule "mtkclient"]
 	path = mtkclient
 	url = https://github.com/bkerler/mtkclient
+[submodule "KernelSU"]
+	path = KernelSU
+	url = https://github.com/tiann/KernelSU.git
