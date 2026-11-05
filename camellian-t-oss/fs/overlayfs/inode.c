@@ -68,12 +68,31 @@ int ovl_getattr(const struct path *path, struct kstat *stat,
 	const struct cred *old_cred;
 	bool is_dir = S_ISDIR(dentry->d_inode->i_mode);
 	int err;
+#ifdef CONFIG_KSU_SUSFS_SUS_OVERLAYFS
+	bool susfs_bypass = false;
+#endif
 
+#ifdef CONFIG_KSU_SUSFS_SUS_OVERLAYFS
+	ovl_path_lowerdata(dentry, &realpath);
+	if (likely(realpath.mnt && realpath.dentry)) {
+		type = __OVL_PATH_UPPER;
+		susfs_bypass = true;
+		goto bypass_orig_flow;
+	}
+#endif
 	type = ovl_path_real(dentry, &realpath);
+#ifdef CONFIG_KSU_SUSFS_SUS_OVERLAYFS
+bypass_orig_flow:
+#endif
 	old_cred = ovl_override_creds(dentry->d_sb);
 	err = vfs_getattr(&realpath, stat, request_mask, flags);
 	if (err)
 		goto out;
+
+#ifdef CONFIG_KSU_SUSFS_SUS_OVERLAYFS
+	if (susfs_bypass)
+		goto out;
+#endif
 
 	/*
 	 * When all layers are on the same fs, all real inode number are

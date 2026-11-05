@@ -22,6 +22,13 @@
 #include <trace/events/writeback.h>
 #include "internal.h"
 
+#ifdef CONFIG_KSU_SUSFS
+/* SUSFS marks inodes through i_state; keep them reclaimable on the LRU. */
+#define SUSFS_INODE_STATE_MASK (16777216 | 33554432 | 67108864)
+#else
+#define SUSFS_INODE_STATE_MASK 0
+#endif
+
 /*
  * Inode locking rules:
  *
@@ -728,7 +735,7 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
 	 * through the LRU as we canot reclaim them now.
 	 */
 	if (atomic_read(&inode->i_count) ||
-	    (inode->i_state & ~I_REFERENCED)) {
+	    (inode->i_state & ~(I_REFERENCED | SUSFS_INODE_STATE_MASK))) {
 		list_lru_isolate(lru, &inode->i_lru);
 		spin_unlock(&inode->i_lock);
 		this_cpu_dec(nr_unused);
@@ -1645,6 +1652,12 @@ int generic_update_time(struct inode *inode, struct timespec *time, int flags)
 {
 	int iflags = I_DIRTY_TIME;
 
+#ifdef CONFIG_KSU_SUSFS_SUS_KSTAT
+	if (unlikely(inode->i_state & 67108864)) {
+		return 0;
+	}
+#endif
+
 	if (flags & S_ATIME)
 		inode->i_atime = *time;
 	if (flags & S_VERSION)
@@ -1668,6 +1681,12 @@ EXPORT_SYMBOL(generic_update_time);
 static int update_time(struct inode *inode, struct timespec *time, int flags)
 {
 	int (*update_time)(struct inode *, struct timespec *, int);
+
+#ifdef CONFIG_KSU_SUSFS_SUS_KSTAT
+	if (unlikely(inode->i_state & 67108864)) {
+		return 0;
+	}
+#endif
 
 	update_time = inode->i_op->update_time ? inode->i_op->update_time :
 		generic_update_time;

@@ -682,6 +682,13 @@ struct inode {
 #endif
 
 	void			*i_private; /* fs or device private pointer */
+#ifdef CONFIG_KSU_SUSFS_SUS_KSTAT
+	u64 android_kabi_reserved1;
+	u64 android_kabi_reserved2;
+	u64 android_kabi_reserved3;
+	u64 android_kabi_reserved4;
+	u64 android_kabi_reserved5;
+#endif
 } __randomize_layout;
 
 static inline unsigned int i_blocksize(const struct inode *node)
